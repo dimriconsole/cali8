@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Currency Converter</title>
+    <!-- Add your neumorphism-inspired CSS here -->
+    <style>
+        body {
+            background: #e0e5ec;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .currency-converter {
+            background: #e0e5ec;
+            border-radius: 25px;
+            box-shadow: -5px -5px 10px #fff, 5px 5px 15px #babecc;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            width: 300px;
+        }
+
+        input[type="text"], select {
+            width: 90%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 10px;
+            border: none;
+            background: #e0e5ec;
+            box-shadow: inset -5px -5px 10px #fff, inset 5px 5px 15px #babecc;
+            font-size: 1rem;
+        }
+
+        button {
+            padding: 10px;
+            border-radius: 10px;
+            border: none;
+            background: #e0e5ec;
+            box-shadow: -5px -5px 10px #fff, 5px 5px 15px #babecc;
+            cursor: pointer;
+            font-size: 1rem;
+            color: #333;
+        }
+
+        button:active {
+            box-shadow: inset -2px -2px 5px #fff, inset 2px 2px 5px #babecc;
+        }
+
+        #conversion-result {
+            background: #e0e5ec;
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: inset -5px -5px 10px #fff, inset 5px 5px 15px #babecc;
+            margin-top: 10px;
+            font-size: 1rem;
+            color: #333;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<div id="currency-converter" class="currency-converter">
+    <input type="text" id="amount" placeholder="Enter amount" />
+    <select id="from-currency">
+        <option value="USD">US Dollar</option>
+        <option value="EUR">Euro</option>
+        <option value="GBP">British Pound</option>
+        <option value="INR">Indian Rupee</option>
+        <!-- Add more currencies as needed -->
+    </select>
+    <select id="to-currency">
+        <option value="USD">US Dollar</option>
+        <option value="EUR">Euro</option>
+        <option value="GBP">British Pound</option>
+        <option value="INR" selected>Indian Rupee</option>
+        <!-- Ensure the default selection is different -->
+    </select>
+    <button onclick="convertCurrency()">Convert</button>
+    <div id="conversion-result"></div>
+</div>
+
+<script>
+    const exchangeRates = {
+        "USD": {
+            "EUR": 0.85,
+            "GBP": 0.75,
+            "INR": 74.57
+            // Add more exchange rates
+        },
+        "EUR": {
+            "USD": 1.18,
+            "GBP": 0.88,
+            "INR": 88.66
+            // Add more exchange rates
+        },
+        "GBP": {
+            "USD": 1.33,
+            "EUR": 1.13,
+            "INR": 100.12
+            // Add more exchange rates
+        },
+        "INR": {
+            "USD": 0.013,
+            "EUR": 0.011,
+            "GBP": 0.0099
+            // Add more exchange rates
+        }
+        // Define other currencies in similar fashion
+    };
+
+    function convertCurrency() {
+        // Get user inputs
+        const amount = parseFloat(document.getElementById('amount').value);
+        const fromCurrency = document.getElementById('from-currency').value;
+        const toCurrency = document.getElementById('to-currency').value;
+
+        // Perform conversion
+        const result = amount * (exchangeRates[fromCurrency][toCurrency] || 0);
+        const resultText = `Converted amount: ${result.toFixed(2)} ${toCurrency}`;
+
+        // Display result
+        document.getElementById('conversion-result').textContent = resultText;
+    }
+</script>
+
+</body>
+</html>
